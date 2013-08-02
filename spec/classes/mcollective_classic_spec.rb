@@ -26,7 +26,14 @@ describe 'mcollective' do
   end
 
   context '#manage_packages' do
-    pending
+    context "default (true)" do
+      it { should contain_package('mcollective') }
+    end
+
+    context "false" do
+      let(:params) { { :manage_packages => false } }
+      it { should_not contain_package('mcollective') }
+    end
   end
 
   context '#manage_plugins' do
