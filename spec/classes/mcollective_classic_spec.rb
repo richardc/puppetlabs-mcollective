@@ -48,15 +48,36 @@ describe 'mcollective' do
   end
 
   context '#server' do
-    pending
+    context 'default (true)' do
+      it { should contain_package('mcollective') }
+    end
+
+    context 'false' do
+      let(:params) { { :server => false } }
+      it { should_not contain_package('mcollective') }
+    end
   end
 
   context '#server_config' do
-    pending
+    context 'default (unset)' do
+      it { should contain_file('server_config').with_content(/Basic stuff/) }
+    end
+
+    context 'set' do
+      let(:params) { { :server_config => 'I like pie' } }
+      it { should contain_file('server_config').with_content('I like pie') }
+    end
   end
 
   context '#server_config_file' do
-    pending
+    context 'default (unset)' do
+      it { should contain_file('server_config').with_path('/etc/mcollective/server.cfg') }
+    end
+
+    context 'set' do
+      let(:params) { { :server_config_file => '/etc/mco/server.cfg' } }
+      it { should contain_file('server_config').with_path('/etc/mco/server.cfg') }
+    end
   end
 
   context '#client' do
