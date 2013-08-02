@@ -37,7 +37,14 @@ describe 'mcollective' do
   end
 
   context '#manage_plugins' do
-    pending
+    context "default (false)" do
+      it { should_not contain_mcollective__plugins__plugin('registration') }
+    end
+
+    context "true" do
+      let(:params) { { :manage_plugins => true } }
+      it { should contain_mcollective__plugins__plugin('registration') }
+    end
   end
 
   context '#server' do
