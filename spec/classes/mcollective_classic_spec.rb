@@ -2,7 +2,15 @@ require 'spec_helper'
 
 describe 'mcollective' do
   context '#version' do
-    pending
+    let(:facts) { { :osfamily => 'RedHat' } }
+    context "default (unset)" do
+      it { should contain_package('mcollective').with_ensure('present') }
+    end
+
+    context "set" do
+      let(:params) { { :version => '1.21' } }
+      it { should contain_package('mcollective').with_ensure('1.21') }
+    end
   end
 
   context '#enterprise' do
