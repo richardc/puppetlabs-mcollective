@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe 'mcollective' do
+  let(:facts) { { :osfamily => 'RedHat' } }
+
   context '#version' do
-    let(:facts) { { :osfamily => 'RedHat' } }
-    context "default (unset)" do
+    context "default" do
       it { should contain_package('mcollective').with_ensure('present') }
     end
 
@@ -14,7 +15,14 @@ describe 'mcollective' do
   end
 
   context '#enterprise' do
-    pending
+    context "default (false)" do
+      it { should contain_service('mcollective').with_name('mcollective') }
+    end
+
+    context 'true' do
+      let(:params) { { :enterprise => true } }
+      it { should contain_service('mcollective').with_name('pe-mcollective') }
+    end
   end
 
   context '#manage_packages' do
