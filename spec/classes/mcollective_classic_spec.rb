@@ -92,11 +92,27 @@ describe 'mcollective' do
   end
 
   context '#client_config' do
-    pending
+    context 'default (unset)' do
+      let(:params) { { :client => true } }
+      it { should contain_file('client_config').with_content(/Basic stuff/) }
+    end
+      
+    context 'set' do
+      let(:params) { { :client => true, :client_config => 'mmm, donuts' } }
+      it { should contain_file('client_config').with_content('mmm, donuts') }
+    end
   end
 
   context '#client_config_file' do
-    pending
+    context 'default (unset)' do
+      let(:params) { { :client => true } }
+      it { should contain_file('client_config').with_path('/etc/mcollective/client.cfg') }
+    end
+      
+    context 'set' do
+      let(:params) { { :client => true, :client_config_file => '/etc/mco/donuts.cfg' } }
+      it { should contain_file('client_config').with_path('/etc/mco/donuts.cfg') }
+    end
   end
 
   context '#main_collective' do
