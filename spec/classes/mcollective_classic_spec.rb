@@ -116,19 +116,47 @@ describe 'mcollective' do
   end
 
   context '#main_collective' do
-    pending
+    context 'default (mcollective)' do
+      it { should contain_file('server_config').with_content(/^main_collective\s+=\s+mcollective$/m) }
+    end
+
+    context 'set' do
+      let(:params) { { :main_collective => 'pies' } }
+      it { should contain_file('server_config').with_content(/^main_collective\s+=\s+pies$/m) }
+    end
   end
 
   context '#collectives' do
-    pending
+    context 'default (mcollective)' do
+      it { should contain_file('server_config').with_content(/collectives\s+=\s+mcollective$/m) }
+    end
+
+    context 'set' do
+      let(:params) { { :collectives => 'pies' } }
+      it { should contain_file('server_config').with_content(/^collectives\s+=\s+pies$/m) }
+    end
   end
 
   context '#connector' do
-    pending
+    context 'default (stomp)' do
+      it { should contain_file('server_config').with_content(/^connector\s+=\s+stomp$/m) }
+    end
+
+    context 'set' do
+      let(:params) { { :connector => 'activemq' } }
+      it { should contain_file('server_config').with_content(/^connector\s+=\s+activemq$/m) }
+    end
   end
 
   context '#classesfile' do
-    pending
+    context 'default (/var/lib/puppet/state/classes.txt)' do
+      it { should contain_file('server_config').with_content(/^classesfile\s+=\s+\/var\/lib\/puppet\/state\/classes.txt$/m) }
+    end
+
+    context 'set' do
+      let(:params) { { :classesfile => 'pies' } }
+      it { should contain_file('server_config').with_content(/^classesfile\s+=\s+pies$/m) }
+    end
   end
 
   context '#stomp_pool' do
@@ -136,31 +164,81 @@ describe 'mcollective' do
   end
 
   context '#stomp_server' do
-    pending
+    context 'default (stomp)' do
+      it { should contain_file('server_config').with_content(/^plugin.stomp.pool.host1\s+=\s+stomp$/m) }
+    end
+
+    context 'set' do
+      let(:params) { { :stomp_server => 'pies' } }
+      it { should contain_file('server_config').with_content(/^plugin.stomp.pool.host1\s+=\s+pies$/m) }
+    end
   end
 
   context '#stomp_user' do
-    pending
+    context 'default (mcollective)' do
+      it { should contain_file('server_config').with_content(/^plugin.stomp.pool.user1\s+=\s+mcollective$/m) }
+    end
+
+    context 'set' do
+      let(:params) { { :stomp_user => 'pies' } }
+      it { should contain_file('server_config').with_content(/^plugin.stomp.pool.user1\s+=\s+pies$/m) }
+    end
   end
 
-  context '#stomp_password' do
-    pending
+  context '#stomp_passwd' do
+    context 'default (marionette)' do
+      it { should contain_file('server_config').with_content(/^plugin.stomp.pool.password1\s+=\s+marionette$/m) }
+    end
+
+    context 'set' do
+      let(:params) { { :stomp_passwd => 'pies' } }
+      it { should contain_file('server_config').with_content(/^plugin.stomp.pool.password1\s+=\s+pies$/m) }
+    end
   end
 
   context '#mc_security_provider' do
-    pending
+    context 'default (psk)' do
+      it { should contain_file('server_config').with_content(/^securityprovider\s+=\s+psk$/m) }
+    end
+
+    context 'set' do
+      let(:params) { { :mc_security_provider => 'pies' } }
+      it { should contain_file('server_config').with_content(/^securityprovider\s+=\s+pies$/m) }
+    end
   end
 
   context '#mc_security_psk' do
-    pending
+    context 'default (changemeplease)' do
+      it { should contain_file('server_config').with_content(/^plugin.psk\s+=\s+changemeplease$/m) }
+    end
+
+    context 'set' do
+      let(:params) { { :mc_security_psk => 'pies' } }
+      it { should contain_file('server_config').with_content(/^plugin.psk\s+=\s+pies$/m) }
+    end
   end
 
   context '#fact_source' do
-    pending
+    context 'default (facter)' do
+      it { should contain_file('server_config').with_content(/^factsource\s+=\s+facter$/m) }
+    end
+
+    context 'set' do
+      let(:params) { { :fact_source => 'yaml' } }
+      it { should contain_file('server_config').with_content(/^factsource\s+=\s+yaml$/m) }
+    end
   end
 
   context '#yaml_facter_source' do
-    pending
+    context 'default (/etc/mcollective/facts.yaml)' do
+      let(:params) { { :fact_source => 'yaml' } }
+      it { should contain_file('server_config').with_content(/^plugin.yaml\s+=\s+\/etc\/mcollective\/facts.yaml$/m) }
+    end
+
+    context 'set' do
+      let(:params) { { :fact_source => 'yaml', :yaml_facter_source => 'pies' } }
+      it { should contain_file('server_config').with_content(/^plugin.yaml\s+=\s+pies$/m) }
+    end
   end
 
   context '#plugin_params' do
