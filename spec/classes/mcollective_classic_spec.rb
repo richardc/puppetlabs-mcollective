@@ -81,7 +81,14 @@ describe 'mcollective' do
   end
 
   context '#client' do
-    pending
+    context 'default (false)' do
+      it { should_not contain_package('mcollective-client') }
+    end
+
+    context 'true' do
+      let(:params) { { :client => true } }
+      it { should contain_package('mcollective-client') }
+    end
   end
 
   context '#client_config' do
