@@ -160,7 +160,10 @@ describe 'mcollective' do
   end
 
   context '#stomp_pool' do
-    pending
+    # The parameter is horrible, and heavily tied to the deprecated stomp
+    # connector.  Kill.
+    let(:params) { { :stomp_pool => { 'pool1' => { 'host1' => 'pies' } } } }
+    it { should contain_file('server_config').with_content(/^plugin.stomp.pool.host1\s+=\s+pies$/m) }
   end
 
   context '#stomp_server' do
@@ -242,6 +245,7 @@ describe 'mcollective' do
   end
 
   context '#plugin_params' do
-    pending
+    let(:params) { { :plugin_params => { 'foo' => 'bar' } } }
+    it { should contain_file('server_config').with_content(/^plugin.foo\s+=\s+bar$/m) }
   end
 end
