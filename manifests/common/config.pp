@@ -11,7 +11,7 @@ class mcollective::common::config {
     recurse      => true,
     purge        => true,
     force        => true,
-    source       => [],
+    source       => [ 'puppet:///modules/mcollective/site_libdir' ],
     sourceselect => 'all',
   }
 
