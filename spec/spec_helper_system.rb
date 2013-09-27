@@ -15,6 +15,14 @@ RSpec.configure do |c|
   # This is where we 'setup' the nodes before running our tests
   c.before :suite do
     puppet_install
+    puppet_master_install
+
+    site_pp = proj_root + '/spec/fixtures/manifests/end_to_end.pp'
+    rcp({
+      :source_path => site_pp,
+      :destination_path => '/etc/puppet/manifests/site.pp',
+    })
+
 
     puppet_module_install(:source => proj_root, :module_name => 'mcollective')
     puppet_module_install(:source => proj_root + '/spec/fixtures/modules/site_mcollective', :module_name => 'site_mcollective')

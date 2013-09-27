@@ -4,7 +4,7 @@ describe 'single node setup:' do
   proj_root = File.expand_path(File.join(File.dirname(__FILE__), '../..'))
   pp = IO.read(proj_root + '/spec/fixtures/manifests/end_to_end.pp')
 
-  context puppet_apply(pp) do
+  context puppet_agent(:debug => true) do
     its(:exit_code) { should_not eq(1) }
   end
 
